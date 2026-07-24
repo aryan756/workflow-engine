@@ -1,0 +1,47 @@
+[project]
+name = "agentic-workflow-engine"
+version = "1.0.0"
+description = "Agentic Workflow Engine - DAG workflow runtime with agent-style decision nodes"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.32",
+    # [asyncio] pulls in greenlet, which SQLAlchemy's async layer requires.
+    "sqlalchemy[asyncio]>=2.0",
+    "greenlet>=3.0",
+    "aiosqlite>=0.20",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.5",
+    "anthropic>=0.40",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.27",
+    "ruff>=0.8",
+    # scripts/ui_verify.py drives the debugger UI in a real browser
+    "playwright>=1.49",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF", "BLE"]
+
+[tool.ruff.lint.per-file-ignores]
+# FastAPI's Depends()/Query() in parameter defaults is the framework idiom.
+"app/api/routes.py" = ["B008"]
+"app/api/deps.py" = ["B008"]
+# Local imports inside tests keep each scenario self-contained.
+"tests/*.py" = ["E501", "PLC0415"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = ["ignore::DeprecationWarning"]

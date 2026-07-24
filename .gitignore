@@ -1,0 +1,43 @@
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# database
+*.db
+*.db-wal
+*.db-shm
+
+# node
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+
+# env (keep the checked-in template)
+.env
+.env.*
+!.env.example
+
+# output of scripts/ui_verify.py
+ui-verification/
+playwright-report/
+test-results/
+
+# logs
+*.log
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*~
